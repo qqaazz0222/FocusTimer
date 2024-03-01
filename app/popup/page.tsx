@@ -1,6 +1,6 @@
 "use client";
 // 라이브러리
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 // 컴포넌트
@@ -21,11 +21,10 @@ import {
     Volume2,
     Play,
     Pause,
-    Link,
     ArrowUpRightFromSquare,
 } from "lucide-react";
 
-export default function Home() {
+export default function PopUp() {
     const videoRef = useRef();
     const [video, setVideo] = useState(
         "https://www.youtube.com/embed/MZgO_k2VjMg"
@@ -57,30 +56,10 @@ export default function Home() {
             muted: e[0] === 0 ? true : false,
         });
     };
-    const openNewWindow = () => {
-        window.open(
-            "/popup",
-            "_blank",
-            "toolbar=no, location=no, status=no, menubar=no, scollbars=no, resizeable=no, directories=no, width=480, height=307, top=0, left=0"
-        );
-    };
     return (
-        <main className="flex min-h-screen flex-col items-center justify-center">
+        <main className="flex min-h-screen flex-col items-center justify-center overflow-hidden">
             <Card className="w-full max-w-[480px]">
-                <CardHeader>
-                    <div className="flex flex-row items-center justify-between">
-                        <h1 className="text-2xl font-bold">Focus Timer</h1>
-                        <Button
-                            variant="ghost"
-                            className="p-3"
-                            title="Open Window"
-                            onClick={openNewWindow}
-                        >
-                            <ArrowUpRightFromSquare className="w-4 h-4 text-slate-500" />
-                        </Button>
-                    </div>
-                </CardHeader>
-                <CardContent className="flex flex-col gap-5">
+                <CardContent className="flex flex-col gap-5 pt-6">
                     <div className="flex flex-row items-center gap-4">
                         {videoState.volume === 0 ? (
                             <VolumeX className="w-6 h-6" />

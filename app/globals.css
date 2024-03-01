@@ -95,3 +95,7 @@
     font-family: "Digital7";
     font-style: italic;
 }
+
+*::-webkit-scrollbar {
+    display: none;
+}

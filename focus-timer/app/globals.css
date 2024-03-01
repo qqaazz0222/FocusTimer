@@ -76,13 +76,22 @@
 }
 
 @font-face {
-    font-family: "NeoDunggeunmo";
-    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.3/NeoDunggeunmo.woff")
-        format("woff");
+    font-family: "Digital7";
+    src: url("/fonts/digital_7.ttf") format("truetype");
     font-weight: normal;
     font-style: normal;
 }
 
+@font-face {
+    font-family: "Digital7";
+    src: url("/fonts/digital_7_italic.ttf") format("truetype");
+    font-weight: normal;
+    font-style: italic;
+}
+
 #pixel {
-    font-family: "NeoDunggeunmo";
+    display: inline-block;
+    padding-top: 1rem;
+    font-family: "Digital7";
+    font-style: italic;
 }

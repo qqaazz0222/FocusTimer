@@ -1,6 +1,6 @@
 "use client";
 // 라이브러리
-import React, { useRef, useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 const ReactPlayer = dynamic(() => import("react-player"), { ssr: false });
 // 컴포넌트
@@ -24,6 +24,7 @@ import {
     Link,
     ArrowUpRightFromSquare,
 } from "lucide-react";
+import Help from "@/components/help";
 
 export default function Home() {
     const videoRef = useRef();
@@ -46,6 +47,14 @@ export default function Home() {
         second: 0,
     });
     const genreList = ["발라드", "댄스", "어쿠스틱", "힙합", "팝", "Lo-Fi"];
+    const videoList = [
+        "https://www.youtube.com/embed/eyyAUFxlnGg",
+        "https://www.youtube.com/embed/mp-i6asnEd0",
+        "https://www.youtube.com/embed/L-232z6xacc",
+        "https://www.youtube.com/embed/rTsFc2DF2n0",
+        "https://www.youtube.com/embed/x6i3_LfeTjY",
+        "https://www.youtube.com/embed/jJTKX1O5pOw",
+    ];
     const [genre, setGenre] = useState(genreList[0]);
     const playPauseHandler = () => {
         setVideoState({ ...videoState, playing: !videoState.playing });
@@ -64,6 +73,12 @@ export default function Home() {
             "toolbar=no, location=no, status=no, menubar=no, scollbars=no, resizeable=no, directories=no, width=480, height=307, top=0, left=0"
         );
     };
+    useEffect(() => {
+        let url = videoList[genreList.indexOf(genre)];
+        console.log(url);
+        setVideoState({ ...videoState, playing: false, played: 0 });
+        setVideo(url);
+    }, [genre]);
     return (
         <main className="flex min-h-screen flex-col items-center justify-center">
             <Card className="w-full max-w-[480px]">
@@ -98,7 +113,11 @@ export default function Home() {
                     <Timer state={timerState} setState={setTimerState} />
                     <div className="flex flex-col gap-4 w-full">
                         <div className="flex flex-row items-center gap-2">
-                            <Select>
+                            <Select
+                                onValueChange={(e) => {
+                                    setGenre(e.target.value);
+                                }}
+                            >
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="장르" />
                                 </SelectTrigger>
@@ -141,6 +160,7 @@ export default function Home() {
                     />
                 </CardContent>
             </Card>
+            <Help />
         </main>
     );
 }

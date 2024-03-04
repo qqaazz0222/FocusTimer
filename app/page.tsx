@@ -79,14 +79,14 @@ export default function Home() {
         const vid = response.data.videoId;
         return vid;
     };
-    const chgVideoId = async () => {
-        const videoId = await getVideoId(genre);
-        let url = `https://www.youtube.com/embed/${videoId}`;
-        setVideoState({ ...videoState, playing: false, played: 0 });
-        setVideo(url);
-    };
+
     useEffect(() => {
-        chgVideoId();
+        const chgVideoId = async () => {
+            const videoId = await getVideoId(genre);
+            let url = `https://www.youtube.com/embed/${videoId}`;
+            setVideoState({ ...videoState, playing: false, played: 0 });
+            setVideo(url);
+        };
     }, [genre]);
     return (
         <main className="flex min-h-screen flex-col items-center justify-center">

@@ -25,6 +25,7 @@ import {
     ArrowUpRightFromSquare,
 } from "lucide-react";
 import Help from "@/components/help";
+import axios from "axios";
 
 export default function Home() {
     const videoRef = useRef();
@@ -73,11 +74,19 @@ export default function Home() {
             "toolbar=no, location=no, status=no, menubar=no, scollbars=no, resizeable=no, directories=no, width=480, height=307, top=0, left=0"
         );
     };
-    useEffect(() => {
-        let url = videoList[genreList.indexOf(genre)];
-        console.log(url);
+    const getVideoId = async (genre: string) => {
+        const response = await axios.get(`api?g=${genre}`);
+        const vid = response.data.videoId;
+        return vid;
+    };
+    const chgVideoId = async () => {
+        const videoId = await getVideoId(genre);
+        let url = `https://www.youtube.com/embed/${videoId}`;
         setVideoState({ ...videoState, playing: false, played: 0 });
         setVideo(url);
+    };
+    useEffect(() => {
+        chgVideoId();
     }, [genre]);
     return (
         <main className="flex min-h-screen flex-col items-center justify-center">
@@ -114,8 +123,8 @@ export default function Home() {
                     <div className="flex flex-col gap-4 w-full">
                         <div className="flex flex-row items-center gap-2">
                             <Select
-                                onValueChange={(e) => {
-                                    setGenre(e.target.value);
+                                onValueChange={(v) => {
+                                    setGenre(v);
                                 }}
                             >
                                 <SelectTrigger className="w-full">
